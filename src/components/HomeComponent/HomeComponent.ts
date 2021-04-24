@@ -5,6 +5,7 @@ export class HomeComponent extends HTMLElement {
     private abortContoller: AbortController;
     private googleAccessToken: string;
     private particleToken: { token: string, exp: number };
+    private inProgress = false;
 
     constructor() {
         super();
@@ -18,24 +19,41 @@ export class HomeComponent extends HTMLElement {
         this.querySelector("#quelleAlexa").addEventListener("click", () => this.quelleAlexaClick(), <any>{ signal: this.abortContoller.signal });
         this.querySelector("#quelleMonitor").addEventListener("click", () => this.quelleMonitorClick(), <any>{ signal: this.abortContoller.signal });
         this.querySelector("#toggleDBFB").addEventListener("click", () => this.toggleDBFBClick(), <any>{ signal: this.abortContoller.signal });
+        this.updateProgress(false);
     }
 
     setGoogleAccessToken(accessToken: string) {
         this.googleAccessToken = accessToken;
     }
 
+    updateProgress(b: boolean) {
+        this.inProgress = b;
+        let div: HTMLDivElement = this.querySelector("#progress");
+        this.querySelectorAll("button").forEach(d => b ? d.setAttribute("disabled", "disabled") : d.removeAttribute("disabled"));
+        div.style.display = b ? "" : "none";
+    }
+
     private async executeParticleFunction(fnName: string, arg: string) {
-        let token = await this.getParticleToken();
-        let body = new URLSearchParams();
-        body.set("arg", arg);
-        await fetch(`https://api.particle.io/v1/devices/4e0033000651343530343432/${fnName}`, {
-            method: "POST",
-            body: body,
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/x-www-form-urlencoded"
+        try {
+            if (this.inProgress) {
+                return;
             }
-        });
+            this.updateProgress(true);
+            let token = await this.getParticleToken();
+            let body = new URLSearchParams();
+            body.set("arg", arg);
+            await fetch(`https://api.particle.io/v1/devices/4e0033000651343530343432/${fnName}`, {
+                method: "POST",
+                body: body,
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            });
+        }
+        finally {
+            this.updateProgress(false);
+        }
     }
 
     async lauterClick() {
