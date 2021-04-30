@@ -1,0 +1,3 @@
+body,button,input,ul,ol{font-family:"Roboto",sans-serif;background-color:#010409;color:#f0f6fc}body{margin:0;padding:0}h1{font-weight:400;margin-top:.2em;margin-bottom:.2em;font-size:1.5em}button{display:inline-block;padding:.5em 1em;font-weight:500;border:1px solid;border-radius:6px;background-color:#21262d;border-color:#30363d;transition:.2s cubic-bezier(0.3, 0, 0.5, 1);transition-property:background-color,color;cursor:pointer}button:hover{background-color:#30363d;border-color:#8b949e;transition-duration:.1s}button:focus{border-color:#8b949e}button:active{background-color:#292e34;border-color:#6e7681;transition:none}button:disabled{color:#484f58;background-color:#21262d;border-color:#30363d}
+
+/*# sourceMappingURL=index.e32ef5eb026e5ec3ae40.css.map*/
