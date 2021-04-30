@@ -1,0 +1,27 @@
+home-component {
+    // display: grid;
+    // grid-template-columns: auto auto auto;
+    // grid-template-rows: 4em 4em 4em;
+    display: flex;
+    // align-items: center;
+    justify-content: center;
+    height: 100vh;
+    & button {
+        width: 10em;
+    }
+    text-align: center;
+}
+.container {
+    // max-width: 30em;
+}
+
+.spinner-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5em;
+    height: 2em;
+}
+.group {
+    margin-bottom: 2em;
+}

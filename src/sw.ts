@@ -7,7 +7,7 @@ declare global {
 }
 let cacheNames = {
     code: `code-${__CACHENAME}`,
-    asset: "asset-v1",
+    asset: "asset-v2",
     webfont: "webfont"
 };
 

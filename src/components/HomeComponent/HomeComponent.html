@@ -1,11 +1,19 @@
-<h2>Volume</h2>
-<button id="lauter">+ lauter</button>
-<button id="leiser">- leiser</button>
-<h2>Quelle</h2>
-<button id="quelleAlexa">Alexa</button>
-<button id="quelleMonitor">Monitor</button>
-<h2>Sound</h2>
-<button id="toggleDBFB">DBFB</button>
-<div>
-    <progress id="progress"></progress>
+<div class="container">
+    <div class="spinner-container">
+        <paper-spinner active="" id="progress"></paper-spinner>
+    </div>
+    <div class="group">
+        <h1>Volume</h1>
+        <button id="leiser">🔉</button>
+        <button id="lauter">🔊</button>
+    </div>
+    <div class="group">
+        <h1>Source</h1>
+        <button id="quelleAlexa">Alexa</button>
+        <button id="quelleMonitor">Monitor</button>
+    </div>
+    <div class="group">
+        <h1>Sound</h1>
+        <button id="toggleDBFB">DBFB</button>
+    </div>
 </div>

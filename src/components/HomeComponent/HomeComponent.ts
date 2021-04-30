@@ -1,5 +1,6 @@
 import template from "./HomeComponent.html";
 import "./HomeComponent.scss";
+import "@polymer/paper-spinner/paper-spinner";
 
 export class HomeComponent extends HTMLElement {
     private abortContoller: AbortController;

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.html",
   "dependencies": {
+    "@polymer/paper-spinner": "^3.0.2",
     "core-js": "^3.8.1",
     "route-it": "^1.2.0"
   },

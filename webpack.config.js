@@ -105,6 +105,7 @@ module.exports = (env, argv) => {
         },
         resolve: {
             extensions: ['.tsx', '.ts', '.js'],
+            symlinks: false
         },
         output: {
             path: path.resolve(__dirname, 'dist'),
@@ -114,7 +115,8 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new HtmlWebpackPlugin({
-                base: base, title: "Smarthome",
+                base: base,
+                title: "Smarthome",
                 template: 'src/index.html'
             }),
             new LicenseCheckerWebpackPlugin({
