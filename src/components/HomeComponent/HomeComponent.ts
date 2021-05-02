@@ -1,6 +1,5 @@
 import template from "./HomeComponent.html";
 import "./HomeComponent.scss";
-import "@polymer/paper-spinner/paper-spinner";
 
 export class HomeComponent extends HTMLElement {
     private abortContoller: AbortController;
@@ -21,6 +20,7 @@ export class HomeComponent extends HTMLElement {
         this.querySelector("#quelleMonitor").addEventListener("click", () => this.quelleMonitorClick(), <any>{ signal: this.abortContoller.signal });
         this.querySelector("#toggleDBFB").addEventListener("click", () => this.toggleDBFBClick(), <any>{ signal: this.abortContoller.signal });
         this.updateProgress(false);
+        import("@polymer/paper-spinner/paper-spinner").catch(err => { console.error("error loading spinner", err); });
     }
 
     setGoogleAccessToken(accessToken: string) {

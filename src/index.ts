@@ -1,6 +1,8 @@
 import "./styles.scss";
-import { BodyChildRouteRenderer, Router } from "route-it";
+import { ContainerRouteRenderer, Router } from "route-it";
 import { AsyncRouteResolver } from "route-it/dist/router";
+import { LoginComponent } from "./components/LoginComponent/LoginComponent";
+import { HomeComponent } from "./components/HomeComponent/HomeComponent";
 
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", async () => {
@@ -56,10 +58,8 @@ async function run() {
         async resolve(lastRoute: string, currentRoute: string, router: Router<any>): Promise<false | HTMLElement> {
             switch (currentRoute) {
                 case "login":
-                    const { LoginComponent } = await import("./components/LoginComponent/LoginComponent");
                     return new LoginComponent();
                 default:
-                    const { HomeComponent } = await import("./components/HomeComponent/HomeComponent");
                     let c = new HomeComponent();
                     c.setGoogleAccessToken(accessToken.access_token);
                     return c;
@@ -67,7 +67,7 @@ async function run() {
         }
     }
 
-    let router = new Router<HTMLElement>(new AppRouteResolver(), new BodyChildRouteRenderer());
+    let router = new Router<HTMLElement>(new AppRouteResolver(), new ContainerRouteRenderer(document.getElementById("content")));
     router.run();
     if (!accessToken) {
         router.navigate("login", "Login", true);

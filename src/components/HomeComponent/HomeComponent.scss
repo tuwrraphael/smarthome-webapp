@@ -1,18 +1,11 @@
 home-component {
-    // display: grid;
-    // grid-template-columns: auto auto auto;
-    // grid-template-rows: 4em 4em 4em;
     display: flex;
-    // align-items: center;
     justify-content: center;
     height: 100vh;
     & button {
         width: 10em;
     }
     text-align: center;
-}
-.container {
-    // max-width: 30em;
 }
 
 .spinner-container {
@@ -25,4 +18,12 @@ home-component {
 }
 .group {
     margin-bottom: 2em;
+}
+
+#leiser, #lauter {
+    padding-top: 0.32em;
+    padding-bottom: 0.12em;
+    & > .material-icons {
+        font-size: 1.5em;
+    }
 }
