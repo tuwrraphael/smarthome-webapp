@@ -32,7 +32,7 @@ export class LoginComponent extends HTMLElement {
             navigator.credentials.get({
                 federated: {
                     providers: [
-                        "https://accounts.google.com"
+                        "https://google.smarthome-app.kesal.at"
                     ]
                 },
                 mediation: "optional"

@@ -41,7 +41,7 @@ async function getAccessToken() {
             var cred = await navigator.credentials.create({
                 federated: {
                     id: body.sub,
-                    provider: "https://accounts.google.com"
+                    provider: "https://google.smarthome-app.kesal.at"
                 }
             });
             await navigator.credentials.store(cred);
