@@ -16,14 +16,11 @@ home-component {
     margin-top: 0.5em;
     height: 2em;
 }
+
 .group {
     margin-bottom: 2em;
 }
 
-#leiser, #lauter {
-    padding-top: 0.32em;
-    padding-bottom: 0.12em;
-    & > .material-icons {
-        font-size: 1.5em;
-    }
+#volume-slider {
+    width: 100%;
 }

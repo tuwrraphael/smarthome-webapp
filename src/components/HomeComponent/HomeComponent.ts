@@ -6,6 +6,9 @@ export class HomeComponent extends HTMLElement {
     private googleAccessToken: string;
     private particleToken: { token: string, exp: number };
     private inProgress = false;
+    private lastValue: number;
+    private maxVolume: number;
+    private middleValue: number;
 
     constructor() {
         super();
@@ -14,13 +17,27 @@ export class HomeComponent extends HTMLElement {
 
     connectedCallback() {
         this.abortContoller = new AbortController();
-        this.querySelector("#lauter").addEventListener("click", () => this.lauterClick(), <any>{ signal: this.abortContoller.signal });
-        this.querySelector("#leiser").addEventListener("click", () => this.leiserClick(), <any>{ signal: this.abortContoller.signal });
+        let volumeSlider = <HTMLInputElement>this.querySelector("#volume-slider");
+        volumeSlider.addEventListener("input", () => this.volumeInput(), <any>{ signal: this.abortContoller.signal });
+        volumeSlider.addEventListener("change", () => this.volumeChanged(), <any>{ signal: this.abortContoller.signal });
+        this.maxVolume = parseInt(volumeSlider.max);
+        this.middleValue = this.maxVolume / 2;
+
         this.querySelector("#quelleAlexa").addEventListener("click", () => this.quelleAlexaClick(), <any>{ signal: this.abortContoller.signal });
         this.querySelector("#quelleMonitor").addEventListener("click", () => this.quelleMonitorClick(), <any>{ signal: this.abortContoller.signal });
         this.querySelector("#toggleDBFB").addEventListener("click", () => this.toggleDBFBClick(), <any>{ signal: this.abortContoller.signal });
         this.updateProgress(false);
         import("@polymer/paper-spinner/paper-spinner").catch(err => { console.error("error loading spinner", err); });
+        document.addEventListener("keypress", async (e: KeyboardEvent) => {
+            if (e.key === "+") {
+                await this.executeParticleFunction("control", "i1");
+            } else if (e.key === "-") {
+                await this.executeParticleFunction("control", "d1");
+            }
+        }, <any>{ signal: this.abortContoller.signal });
+    }
+    volumeInput(): void {
+        this.lastValue = parseInt((<HTMLInputElement>this.querySelector("#volume-slider")).value);
     }
 
     setGoogleAccessToken(accessToken: string) {
@@ -31,10 +48,16 @@ export class HomeComponent extends HTMLElement {
         this.inProgress = b;
         let div: HTMLDivElement = this.querySelector("#progress");
         this.querySelectorAll("button").forEach(d => b ? d.setAttribute("disabled", "disabled") : d.removeAttribute("disabled"));
+        if (b) {
+            this.querySelector("#volume-slider").setAttribute("disabled", "disabled");
+        } else {
+            this.querySelector("#volume-slider").removeAttribute("disabled");
+        }
         div.style.display = b ? "" : "none";
     }
 
     private async executeParticleFunction(fnName: string, arg: string) {
+        console.log(fnName, arg);
         try {
             if (this.inProgress) {
                 return;
@@ -57,12 +80,13 @@ export class HomeComponent extends HTMLElement {
         }
     }
 
-    async lauterClick() {
-        await this.executeParticleFunction("control", "i");
-    }
-
-    async leiserClick() {
-        await this.executeParticleFunction("control", "d");
+    async volumeChanged() {
+        if (this.lastValue < this.middleValue) {
+            await this.executeParticleFunction("control", `d${this.middleValue - this.lastValue}`);
+        } else if (this.lastValue > this.middleValue) {
+            await this.executeParticleFunction("control", `i${this.lastValue - this.middleValue}`);
+        }
+        (<HTMLInputElement>this.querySelector("#volume-slider")).value = `${this.middleValue}`;
     }
 
     async quelleAlexaClick() {
